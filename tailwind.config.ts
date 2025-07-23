@@ -63,9 +63,9 @@ extend: {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				'healthy-green': 'hsl(var(--healthy-green))',
+				'aqua-green': 'hsl(var(--aqua-green))',
 				'warm-orange': 'hsl(var(--warm-orange))',
-				'soft-peach': 'hsl(var(--soft-peach))',
+				'nude-peach': 'hsl(var(--nude-peach))',
 				'mint-green': 'hsl(var(--mint-green))',
 				'sunny-yellow': 'hsl(var(--sunny-yellow))'
 			},

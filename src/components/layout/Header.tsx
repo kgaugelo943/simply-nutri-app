@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, User, Menu } from "lucide-react";
 import { useState } from "react";
+import logo from "@/assets/logo.png";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -10,7 +11,7 @@ export function Header() {
       <div className="container flex h-16 max-w-screen-2xl items-center">
         <div className="mr-4 hidden md:flex">
           <a className="mr-6 flex items-center space-x-2" href="/">
-            <div className="h-8 w-8 rounded-full bg-gradient-primary"></div>
+            <img src={logo} alt="Simply Nutri" className="h-8 w-8" />
             <span className="hidden font-bold sm:inline-block">Simply Nutri</span>
           </a>
           <nav className="flex items-center space-x-6 text-sm font-medium">
@@ -32,7 +33,7 @@ export function Header() {
         <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
           <div className="w-full flex-1 md:w-auto md:flex-none">
             <a className="inline-flex items-center space-x-2 md:hidden" href="/">
-              <div className="h-6 w-6 rounded-full bg-gradient-primary"></div>
+              <img src={logo} alt="Simply Nutri" className="h-6 w-6" />
               <span className="font-bold">Simply Nutri</span>
             </a>
           </div>
