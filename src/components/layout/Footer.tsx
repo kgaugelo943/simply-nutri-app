@@ -45,7 +45,7 @@ export function Footer() {
             <div className="space-y-3 text-sm">
               <div className="flex items-center space-x-2">
                 <Phone className="h-4 w-4" />
-                <span className="text-background/80">+1 (555) 123-4567</span>
+                <span className="text-background/80">+27 606920968</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Mail className="h-4 w-4" />
@@ -53,7 +53,7 @@ export function Footer() {
               </div>
               <div className="flex items-center space-x-2">
                 <MapPin className="h-4 w-4" />
-                <span className="text-background/80">123 Healthy St, Nutrition City</span>
+                <span className="text-background/80">Cossal Crescent, Cape Town</span>
               </div>
             </div>
           </div>
