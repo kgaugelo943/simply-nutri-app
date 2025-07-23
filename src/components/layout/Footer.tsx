@@ -49,7 +49,7 @@ export function Footer() {
               </div>
               <div className="flex items-center space-x-2">
                 <Mail className="h-4 w-4" />
-                <span className="text-background/80">hello@simplynutri.com</span>
+                <span className="text-background/80">NutriBites@simplynutri.com</span>
               </div>
               <div className="flex items-center space-x-2">
                 <MapPin className="h-4 w-4" />
