@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Zap, Shield, Heart } from "lucide-react";
-import heroImage from "@/assets/hero-image.jpg";
+import heroImage from "@/assets/hero-food-characters.jpg";
 
 export function Hero() {
   return (
@@ -11,7 +11,7 @@ export function Hero() {
             <div className="space-y-4">
               <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-7xl">
                 Healthy Snacks,
-                <span className="bg-gradient-primary bg-clip-text text-transparent"> 
+                <span className="text-warm-orange"> 
                   {" "}Smart Delivery
                 </span>
               </h1>
@@ -56,7 +56,7 @@ export function Hero() {
             <div className="relative overflow-hidden rounded-2xl shadow-elevated">
               <img
                 src={heroImage}
-                alt="Healthy snacks and happy children"
+                alt="Playful healthy food characters"
                 className="h-full w-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>

@@ -2,7 +2,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Star, Plus } from "lucide-react";
-import healthySnacksImage from "@/assets/healthy-snacks.jpg";
+import snackCharacters from "@/assets/snack-characters.jpg";
+import orangeCharacter from "@/assets/orange-character.jpg";
+import bananaHero from "@/assets/banana-hero.jpg";
+import heroFoodCharacters from "@/assets/hero-food-characters.jpg";
 
 const menuItems = [
   {
@@ -12,7 +15,7 @@ const menuItems = [
     rating: 4.8,
     category: "Bars",
     badges: ["Gluten-Free", "High Fiber"],
-    image: healthySnacksImage
+    image: snackCharacters
   },
   {
     id: 2,
@@ -21,7 +24,7 @@ const menuItems = [
     rating: 4.9,
     category: "Fruits",
     badges: ["Fresh", "Vitamin C"],
-    image: healthySnacksImage
+    image: orangeCharacter
   },
   {
     id: 3,
@@ -30,7 +33,7 @@ const menuItems = [
     rating: 4.6,
     category: "Snacks",
     badges: ["Whole Grain", "Low Sodium"],
-    image: healthySnacksImage
+    image: bananaHero
   },
   {
     id: 4,
@@ -39,7 +42,7 @@ const menuItems = [
     rating: 4.7,
     category: "Chips",
     badges: ["Baked", "No Artificial Colors"],
-    image: healthySnacksImage
+    image: heroFoodCharacters
   }
 ];
 
