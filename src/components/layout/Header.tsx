@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
-import { ShoppingCart, User, Menu, LogOut } from "lucide-react";
+import { User, Menu, LogOut } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
+import { CartSheet } from "@/components/cart/CartSheet";
 import { useNavigate } from "react-router-dom";
 import logo from "@/assets/logo.png";
 
@@ -42,12 +43,7 @@ export function Header() {
             </a>
           </div>
           <nav className="flex items-center space-x-2">
-            {user && (
-              <Button variant="ghost" size="icon">
-                <ShoppingCart className="h-5 w-5" />
-                <span className="sr-only">Shopping cart</span>
-              </Button>
-            )}
+            {user && <CartSheet />}
             {user ? (
               <>
                 <Button variant="ghost" size="icon">
