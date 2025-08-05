@@ -11,7 +11,7 @@ import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Plus, Edit, Trash2, Package, ShoppingCart } from "lucide-react";
+import { Plus, Edit, Trash2, Package, ShoppingCart, Upload, X } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
@@ -64,6 +64,8 @@ export default function Admin() {
     image_url: "",
     badges: ""
   });
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const [imageFile, setImageFile] = useState<File | null>(null);
 
   useEffect(() => {
     checkAdminAccess();
@@ -253,6 +255,75 @@ export default function Admin() {
     }
   };
 
+  const uploadImage = async (file: File): Promise<string | null> => {
+    try {
+      setUploadingImage(true);
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Date.now()}.${fileExt}`;
+      const filePath = fileName;
+
+      const { error: uploadError, data } = await supabase.storage
+        .from('menu-images')
+        .upload(filePath, file);
+
+      if (uploadError) {
+        throw uploadError;
+      }
+
+      const { data: { publicUrl } } = supabase.storage
+        .from('menu-images')
+        .getPublicUrl(filePath);
+
+      return publicUrl;
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      toast({
+        title: "Error",
+        description: "Failed to upload image. Please try again.",
+        variant: "destructive",
+      });
+      return null;
+    } finally {
+      setUploadingImage(false);
+    }
+  };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      toast({
+        title: "Invalid file type",
+        description: "Please select an image file.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Validate file size (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      toast({
+        title: "File too large",
+        description: "Please select an image smaller than 5MB.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setImageFile(file);
+    const publicUrl = await uploadImage(file);
+    if (publicUrl) {
+      setFormData(prev => ({ ...prev, image_url: publicUrl }));
+    }
+  };
+
+  const removeImage = () => {
+    setImageFile(null);
+    setFormData(prev => ({ ...prev, image_url: "" }));
+  };
+
   const resetForm = () => {
     setFormData({
       name: "",
@@ -264,6 +335,7 @@ export default function Admin() {
       image_url: "",
       badges: ""
     });
+    setImageFile(null);
     setEditingItem(null);
   };
 
@@ -379,14 +451,69 @@ export default function Admin() {
                       </div>
                     </div>
                     
-                    <div>
-                      <Label htmlFor="image_url">Image URL</Label>
-                      <Input
-                        id="image_url"
-                        type="url"
-                        value={formData.image_url}
-                        onChange={(e) => setFormData(prev => ({ ...prev, image_url: e.target.value }))}
-                      />
+                    <div className="space-y-4">
+                      <Label>Product Image</Label>
+                      
+                      {/* File Upload */}
+                      <div className="border-2 border-dashed border-border rounded-lg p-6">
+                        <div className="text-center">
+                          <Upload className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
+                          <div className="space-y-2">
+                            <p className="text-sm text-muted-foreground">
+                              Upload an image file or enter a URL below
+                            </p>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={handleImageUpload}
+                              className="hidden"
+                              id="image-upload"
+                              disabled={uploadingImage}
+                            />
+                            <Button
+                              type="button"
+                              variant="outline"
+                              size="sm"
+                              onClick={() => document.getElementById('image-upload')?.click()}
+                              disabled={uploadingImage}
+                            >
+                              {uploadingImage ? 'Uploading...' : 'Choose File'}
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Current Image Preview */}
+                      {(formData.image_url || imageFile) && (
+                        <div className="relative">
+                          <img
+                            src={formData.image_url || (imageFile ? URL.createObjectURL(imageFile) : '')}
+                            alt="Preview"
+                            className="w-full h-32 object-cover rounded-lg border"
+                          />
+                          <Button
+                            type="button"
+                            variant="destructive"
+                            size="sm"
+                            className="absolute top-2 right-2"
+                            onClick={removeImage}
+                          >
+                            <X className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      )}
+
+                      {/* URL Input */}
+                      <div>
+                        <Label htmlFor="image_url">Or enter image URL</Label>
+                        <Input
+                          id="image_url"
+                          type="url"
+                          value={formData.image_url}
+                          onChange={(e) => setFormData(prev => ({ ...prev, image_url: e.target.value }))}
+                          placeholder="https://example.com/image.jpg"
+                        />
+                      </div>
                     </div>
                     
                     <div>
